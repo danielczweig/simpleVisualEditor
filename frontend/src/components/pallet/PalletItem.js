@@ -1,26 +1,34 @@
 import React from "react";
-import Image from "react-bootstrap/Image";
-import Container from "react-bootstrap/Container";
 import { useDrag } from "react-dnd";
 
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+
 const palletItemStyles = {
-    maxWidth: "120px",
-    height: "100%",
+  cursor: "move",
+  objectFit: "contain",
+  maxWidth: "100%",
 }
 
 const PalletItem = ({ imageSrc }) => {
-  const [, ref] = useDrag({
-    type: "IMAGE", // The type that will be used in the drop target
-    item: { src: imageSrc },
-  });
+  const [{isDragging}, drag] = useDrag(() => ({
+    type: "image",
+    item: { imageSrc },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }))
 
   return (
-    <Container className="pallet-item">
+    <Container>
         <Image
-            ref={ref} 
+            ref={drag} 
             src={imageSrc} 
             alt="Pallet Item"
-            style={palletItemStyles}
+            style={{
+              ...palletItemStyles,
+              opacity: isDragging ? 0.5 : 1,
+            }}
             rounded
         />
     </Container>

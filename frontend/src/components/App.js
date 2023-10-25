@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import ActionArea from "./components/action/ActionArea.js";
-import EditArea from "./components/action/EditArea.js";
-import LayoutArea from "./components/layout/LayoutArea.js";
+
+import ActionArea from "./action/ActionArea.js";
+import EditArea from "./action/EditArea.js";
+import LayoutArea from "./layout/LayoutArea.js";
 
 const canvasStyles = {
   position: "absolute",

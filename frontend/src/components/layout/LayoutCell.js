@@ -1,31 +1,52 @@
 import React, { useState } from "react";
+import { useDrop } from 'react-dnd'
 
-const LayoutCell = ({ id, onSplitCell }) => {
-  const [isSplit, setIsSplit] = useState(false);
+import Image from "react-bootstrap/Image";
 
-  const handleSplitCell = () => {
-    onSplitCell(id, !isSplit); // Pass the cell ID and whether to split horizontally or vertically
-    setIsSplit(!isSplit);
-  };
+const LayoutCell = ({ id, content }) => {
+  const [image, setImage] = useState(null)
 
   const cellStyles = {
     width: "100%",
     height: "25%",
-    border: "1px solid #000",
+    border: "1px solid black",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: "image",
+    drop: (item) => handleImageDrop(item),
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }))
+
+  const handleImageDrop = (item) => {
+    const { imageSrc } = item
+    setImage(imageSrc)
+  }
+
+  let dropStyles = {}
+  if (isOver) dropStyles = {
+    border: "1px solid blue",
+    backgroundColor: "blue"
+  }
+
   return (
-    <div className={`cell ${isSplit ? "split" : ""}`} style={cellStyles}>
-      {isSplit ? (
-        <div className="split-buttons">
-          <button onClick={() => handleSplitCell()}>Split Horizontally</button>
-          <button onClick={() => handleSplitCell()}>Split Vertically</button>
-        </div>
-      ) : (
-        <div className="cell-content">
-          {/* Render cell content (e.g., dropped images) */}
-        </div>
-      )}
+    <div
+      style={{...cellStyles, ...dropStyles}}
+      ref={drop}
+    >
+      {image &&
+        <Image
+          src={image} 
+          alt="Image"
+          fluid
+        />
+      }
     </div>
   );
 };
