@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import LayoutCell from "./LayoutCell";
 
@@ -9,36 +9,9 @@ const layoutAreaStyles = {
   marginLeft: "auto",
   marginRight: "auto",
   marginTop: "5%",
-  border: "1px solid #000",
 };
 
-const LayoutArea = ({ setEditView }) => {
-  const [cells, setCells] = useState([
-    { id: 1, content: null },
-    { id: 2, content: null },
-    { id: 3, content: null },
-    { id: 4, content: null },
-  ]);
-
-  const splitCell = (cellId, isHorizontal) => {
-    const updatedCells = cells.map((cell) => {
-      if (cell.id === cellId) {
-        if (isHorizontal) {
-          return {
-            ...cell,
-            height: cell.height / 2,
-          };
-        } else {
-          return {
-            ...cell,
-            width: cell.width / 2,
-          };
-        }
-      }
-      return cell;
-    });
-    setCells(updatedCells);
-  };
+const LayoutArea = ({ setEditView, cells }) => {
 
   return (
     <div
@@ -49,10 +22,8 @@ const LayoutArea = ({ setEditView }) => {
         <LayoutCell
           key={cell.id}
           id={cell.id}
-          content={cell.content}
           width={cell.width}
           height={cell.height}
-          onSplitCell={splitCell}
         />
       ))}
     </div>

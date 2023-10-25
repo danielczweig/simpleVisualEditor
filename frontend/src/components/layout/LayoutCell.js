@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd'
 
 import Image from "react-bootstrap/Image";
 
-const LayoutCell = ({ id, content }) => {
+const LayoutCell = () => {
   const [image, setImage] = useState(null)
 
   const cellStyles = {
