@@ -1,4 +1,5 @@
 import React from "react";
+
 import LayoutEditArea from "../layout/LayoutEditArea.js";
 import PalletEditArea from "../pallet/PalletEditArea.js";
 

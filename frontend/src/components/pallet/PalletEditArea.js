@@ -1,6 +1,8 @@
 import React from "react";
-import Stack from "react-bootstrap/Stack";
+
 import PalletItem from "./PalletItem";
+
+import Stack from "react-bootstrap/Stack";
 
 
 // TODO: replace with functionality to add photos
@@ -11,6 +13,7 @@ const imageSrcList = [
 ];
 
 const palletEditAreaStyles = {
+    maxWidth: "15rem",
     backgroundColor: "#eee",
     padding: "1rem",
     border: "1px solid #000",
