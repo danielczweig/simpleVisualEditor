@@ -10,7 +10,7 @@ const palletItemStyles = {
   maxWidth: "100%",
 }
 
-const PalletItem = ({ imageSrc }) => {
+const PalletItem = ({ imageSrc, setSelectedCell }) => {
   const [{isDragging}, drag] = useDrag(() => ({
     type: "image",
     item: { imageSrc },
@@ -18,6 +18,8 @@ const PalletItem = ({ imageSrc }) => {
       isDragging: !!monitor.isDragging(),
     }),
   }))
+
+  if (isDragging) setSelectedCell(null)
 
   return (
     <Container>

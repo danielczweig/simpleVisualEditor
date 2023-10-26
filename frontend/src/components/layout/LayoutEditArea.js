@@ -11,20 +11,24 @@ const layoutEditAreaStyles = {
     border: "1px solid #000",
 };
 
-const LayoutEditArea = ({ cells, setCells }) => {
+const LayoutEditArea = ({ setSections, setSplitCell }) => {
 
   const addNewCell = () => {
-    const newCell = { id: uuidv4() };
-    setCells((prevCells) => [...prevCells, newCell]);
+    const newSection = { id: uuidv4() };
+    setSections((prevSections) => [...prevSections, newSection]);
   };
+
+  const splitCell = (splitDir) => {
+    setSplitCell(splitDir)
+  }
   
   return (
     <div style={layoutEditAreaStyles}>
       <Stack gap={3}>
         <Button variant="light" onClick={() => addNewCell()}>Add Cell</Button>
         <Button variant="light">Empty Cell</Button>
-        <Button variant="light">Split Cell Vertically</Button>
-        <Button variant="light">Split Cell Horizontally</Button>
+        <Button variant="light" onClick={() => splitCell("vertical")}>Split Cell Vertically</Button>
+        <Button variant="light" onClick={() => splitCell("horizontal")}>Split Cell Horizontally</Button>
       </Stack>
     </div>
   );
