@@ -3,17 +3,19 @@ import { useDrop } from 'react-dnd'
 
 import Image from "react-bootstrap/Image";
 
-const LayoutCell = () => {
-  const [image, setImage] = useState(null)
+const LayoutCell = ({ id, height, width, selected, setSelectedCell, src }) => {
+  const [image, setImage] = useState(src)
 
   const cellStyles = {
     width: "100%",
-    height: "25%",
-    border: "1px solid black",
-    overflow: "hidden",
+    height: "100%",
+    gridColumn: "span " + width,
+    gridRow: "span " + height,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
+    border: "1px solid black",
   };
 
   const [{ isOver }, drop] = useDrop(() => ({
@@ -29,16 +31,18 @@ const LayoutCell = () => {
     setImage(imageSrc)
   }
 
-  let dropStyles = {}
-  if (isOver) dropStyles = {
+  let dropOrSelectedStyles = {}
+  if (isOver || selected) dropOrSelectedStyles = {
     border: "1px solid blue",
-    backgroundColor: "blue"
+    backgroundColor: "blue",
+    opacity: 0.5,
   }
 
   return (
     <div
-      style={{...cellStyles, ...dropStyles}}
+      style={{...cellStyles, ...dropOrSelectedStyles}}
       ref={drop}
+      onClick={() => setSelectedCell({id: id, src: image})}
     >
       {image &&
         <Image

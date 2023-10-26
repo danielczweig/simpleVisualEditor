@@ -15,13 +15,15 @@ const canvasStyles = {
 }
 
 const App = () => {
-  const [editView, setEditView] = useState("Pallet")
-  const [cells, setCells] = useState([
+  const [editView, setEditView] = useState("Pallet");
+  const [sections, setSections] = useState([
     { id: uuidv4() },
     { id: uuidv4() },
     { id: uuidv4() },
     { id: uuidv4() },
   ]);
+  const [selectedCell, setSelectedCell] = useState(null)
+  const [splitCell, setSplitCell] = useState(null)
 
   return (
     <>
@@ -30,13 +32,21 @@ const App = () => {
       />
       <div style={canvasStyles}>
         <LayoutArea 
+          sections={sections}
+          selectedCell = {selectedCell}
           setEditView={setEditView}
-          cells={cells}
+          setSections={setSections}
+          setSelectedCell={setSelectedCell}
+          setSplitCell={setSplitCell}
+          splitCell = {splitCell}
         />
         <EditArea
-          cells={cells} 
+          sections={sections} 
           editView={editView}
-          setCells={setCells}
+          selectedCell={selectedCell}
+          setSections={setSections}
+          setSelectedCell={setSelectedCell}
+          setSplitCell={setSplitCell}
         />
       </div>
     </>

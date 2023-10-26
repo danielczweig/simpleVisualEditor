@@ -10,17 +10,24 @@ const actionAreaStyles = {
   top: "10%",
 }
 
-const EditArea = ({ cells, editView, setCells }) => {
+const EditArea = ({ sections, editView, setSections, setSelectedCell, setSplitCell }) => {
   return (
-    <div style={actionAreaStyles}>
-        {editView === null && null}
-        {editView === "Pallet" && <PalletEditArea />}
-        {editView === "Layout" && 
-          <LayoutEditArea
-            cells={cells} 
-            setCells={setCells}
-          />
-        }
+    <div 
+      style={actionAreaStyles}
+    >
+      {editView === null && null}
+      {editView === "Pallet" && 
+        <PalletEditArea 
+          setSelectedCell={setSelectedCell}
+        />
+      }
+      {editView === "Layout" && 
+        <LayoutEditArea
+          sections={sections} 
+          setSections={setSections}
+          setSplitCell={setSplitCell}
+        />
+      }
     </div>
   );
 }

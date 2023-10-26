@@ -1,6 +1,6 @@
 import React from "react";
 
-import LayoutCell from "./LayoutCell";
+import LayoutSection from "./LayoutSection";
 
 const layoutAreaStyles = {
   height: "75%",
@@ -11,21 +11,23 @@ const layoutAreaStyles = {
   marginTop: "5%",
 };
 
-const LayoutArea = ({ setEditView, cells }) => {
+const LayoutArea = ({ sections, selectedCell, setEditView, setSelectedCell, setSplitCell, splitCell }) => {
 
   return (
     <div
       style={layoutAreaStyles}
       onClick={() => setEditView("Layout")}
     >
-      {cells.map((cell) => (
-        <LayoutCell
-          key={cell.id}
-          id={cell.id}
-          width={cell.width}
-          height={cell.height}
-        />
-      ))}
+        {sections.map((section) => (
+          <LayoutSection
+            key={section.id}
+            id={section.id}
+            selectedCell={selectedCell}
+            setSelectedCell={setSelectedCell}
+            setSplitCell={setSplitCell}
+            splitCell={splitCell}
+          />
+        ))}
     </div>
   );
 };

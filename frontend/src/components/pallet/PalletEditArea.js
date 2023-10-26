@@ -19,14 +19,17 @@ const palletEditAreaStyles = {
     border: "1px solid #000",
 };
 
-const PalletEditArea = () => {
+const PalletEditArea = ({ setSelectedCell }) => {
     return (
-        <div style={palletEditAreaStyles}>
+        <div 
+            style={palletEditAreaStyles}
+        >
             <Stack gap={3}>
                 {imageSrcList.map((imageSrc, index) => (
                     <PalletItem
                         key={index}
                         imageSrc={imageSrc}
+                        setSelectedCell={setSelectedCell}
                     />
                 ))}
             </Stack>
