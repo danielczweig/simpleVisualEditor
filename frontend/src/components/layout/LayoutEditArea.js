@@ -11,11 +11,11 @@ const layoutEditAreaStyles = {
     border: "1px solid #000",
 };
 
-const LayoutEditArea = ({ setSections, setSplitCell }) => {
+const LayoutEditArea = ({ gridCols, gridRows, setCells, setSplitCell }) => {
 
   const addNewCell = () => {
-    const newSection = { id: uuidv4() };
-    setSections((prevSections) => [...prevSections, newSection]);
+    const newCell = { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null };
+    setCells((prevCells) => [...prevCells, newCell]);
   };
 
   const splitCell = (splitDir) => {

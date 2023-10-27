@@ -10,7 +10,7 @@ const actionAreaStyles = {
   top: "10%",
 }
 
-const EditArea = ({ sections, editView, setSections, setSelectedCell, setSplitCell }) => {
+const EditArea = ({ editView, gridCols, gridRows, setCells, setSelectedCell, setSplitCell }) => {
   return (
     <div 
       style={actionAreaStyles}
@@ -23,8 +23,9 @@ const EditArea = ({ sections, editView, setSections, setSelectedCell, setSplitCe
       }
       {editView === "Layout" && 
         <LayoutEditArea
-          sections={sections} 
-          setSections={setSections}
+          gridCols={gridCols}
+          gridRows={gridRows}
+          setCells={setCells}
           setSplitCell={setSplitCell}
         />
       }

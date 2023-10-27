@@ -19,7 +19,7 @@ const PalletItem = ({ imageSrc, setSelectedCell }) => {
     }),
   }))
 
-  if (isDragging) setSelectedCell(null)
+  // if (isDragging) setSelectedCell(null)
 
   return (
     <Container>

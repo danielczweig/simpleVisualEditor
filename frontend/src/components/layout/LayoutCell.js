@@ -1,37 +1,61 @@
-import React, { useState } from "react";
-import { useDrop } from 'react-dnd'
+import React from "react";
+import { useDrag, useDrop } from 'react-dnd'
 
-import Image from "react-bootstrap/Image";
-
-const LayoutCell = ({ id, height, width, selected, setSelectedCell, src }) => {
-  const [image, setImage] = useState(src)
+const LayoutCell = ({ id, cells, cellSrc, handleSwap, height, width, selected, setCells, setSelectedCell }) => {
 
   const cellStyles = {
+    heigh: "100%",
     width: "100%",
-    height: "100%",
     gridColumn: "span " + width,
     gridRow: "span " + height,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
+    backgroundImage: `url(${cellSrc})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
     border: "1px solid black",
+    cursor: "move",
   };
+  
+  // eslint-disable-next-line
+  const [{isDragging}, drag] = useDrag(() => ({
+    type: "cellContent",
+    item: { id },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }))
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: "image",
-    drop: (item) => handleImageDrop(item),
+    accept: ["image", "cellContent"],
+    drop: (item) => handleDrop(item),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
   }))
 
-  const handleImageDrop = (item) => {
-    const { imageSrc } = item
-    setImage(imageSrc)
+  const handleDrop = (item) => {
+    const imageSrc = (item.imageSrc)
+    const id = (item.id)
+    
+    if (imageSrc) handleDropImage(item)
+    if (id) handleSwapContent(item, cells)
   }
 
-  let dropOrSelectedStyles = {}
+  const handleDropImage = (item) => {
+    const updatedCells = cells.map((cell) => cell);
+    const dropIndex = updatedCells.findIndex((cell) => cell.id === id);
+    updatedCells[dropIndex].src = item.imageSrc;
+
+    setCells(updatedCells)
+  }
+
+  const handleSwapContent = (item, cells) => {
+    const dragCellId = item.id;
+    const dropCellId = id;
+
+    handleSwap(dragCellId, dropCellId);
+  }
+
+  let dropOrSelectedStyles = {};
   if (isOver || selected) dropOrSelectedStyles = {
     border: "1px solid blue",
     backgroundColor: "blue",
@@ -42,14 +66,14 @@ const LayoutCell = ({ id, height, width, selected, setSelectedCell, src }) => {
     <div
       style={{...cellStyles, ...dropOrSelectedStyles}}
       ref={drop}
-      onClick={() => setSelectedCell({id: id, src: image})}
+      onClick={() => setSelectedCell({id: id, src: cellSrc})}
+      onMouseDown={() => setSelectedCell({id: id, src: cellSrc})}
     >
-      {image &&
-        <Image
-          src={image} 
-          alt="Image"
-          fluid
-        />
+      {cellSrc &&
+        <div 
+          ref={drag} 
+          style={{height: "100%", width: "100%"}}>
+        </div>
       }
     </div>
   );

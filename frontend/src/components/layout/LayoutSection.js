@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,24 +15,17 @@ const sectionStyles = {
     gridTemplateRows: `repeat(${gridRows}, 1fr)`,
 };
 
-const LayoutSection = ({ id, selectedCell, setSelectedCell, setSplitCell, splitCell }) => {
+const LayoutSection = ({ id, handleSwapContent, selectedCell, setSections, setSelectedCell, setSplitCell, splitCell }) => {
     const [cells, setCells] = useState([
-        // { id: uuidv4(), w: 32, h: 64, src: null },
-        // { id: uuidv4(), w: 32, h: 32, src: null },
-        // { id: uuidv4(), w: 64, h: 64, src: null },
-        // { id: uuidv4(), w: 128, h: 128, src: null },
-        // { id: uuidv4(), w: 32, h: 16, src: null },
-        // { id: uuidv4(), w: 32, h: 16, src: null },
-        // { id: uuidv4(), w: 128, h: 64, src: null },
-        { id: uuidv4(), w: gridCols, h: gridRows, src: null },
+        { id: uuidv4(), sectionId: id, w: gridCols, h: gridRows, src: null },
     ])
 
     const handleVerticalSplit = (selectedCell) => {
         const updatedCells = cells.flatMap((cell) => {
           if (cell.id === selectedCell.id) {
             const splitWidth = cell.w / 2;
-            const newCell1 = { id: uuidv4(), w: splitWidth, h: cell.h, src: selectedCell.src };
-            const newCell2 = { id: uuidv4(), w: splitWidth, h: cell.h, src: selectedCell.src };
+            const newCell1 = { id: uuidv4(), sectionId: id, w: splitWidth, h: cell.h, src: selectedCell.src };
+            const newCell2 = { id: uuidv4(), sectionId: id, w: splitWidth, h: cell.h, src: selectedCell.src };
             return [newCell1, newCell2];
           }
           return cell;
@@ -40,31 +33,6 @@ const LayoutSection = ({ id, selectedCell, setSelectedCell, setSplitCell, splitC
     
         setCells(updatedCells);
     };
-
-
-    // const handleHorizontalSplit = (selectedCell) => {
-    //     let newCell2 = null;
-    //     let placingCell2 = false;
-    //     let colsLeftInRow = gridCols;
-
-    //     const updatedCells = cells.flatMap((cell, i, arr) => {
-    //       colsLeftInRow -= cell.w;
-    //       if (cell.id === selectedCell.id) {
-    //         const splitHeight = cell.h / 2;
-    //         const newCell1 = { id: uuidv4(), w: cell.w, h: splitHeight, src: selectedCell.src };
-    //         newCell2 = { id: uuidv4(), w: cell.w, h: splitHeight, src: selectedCell.src };
-    //         if (i === arr.length - 1) return [newCell1, newCell2];
-    //         placingCell2 = true;
-    //         return newCell1;
-    //       } else {
-    //         if (colsLeftInRow === 0 && placingCell2) return [cell, newCell2];
-    //         if (colsLeftInRow === 0) colsLeftInRow = gridCols;
-    //         return cell;
-    //       }
-    //     });
-      
-    //     setCells(updatedCells);
-    // };
 
     const handleHorizontalSplit = (selectedCell) => {
         let newCell2 = null;
@@ -74,8 +42,8 @@ const LayoutSection = ({ id, selectedCell, setSelectedCell, setSplitCell, splitC
         const updatedCells = cells.flatMap((cell, i, arr) => {
           if (cell.id === selectedCell.id) {
             const splitHeight = cell.h / 2;
-            const newCell1 = { id: uuidv4(), w: cell.w, h: splitHeight, src: selectedCell.src };
-            newCell2 = { id: uuidv4(), w: cell.w, h: splitHeight, src: selectedCell.src };
+            const newCell1 = { id: uuidv4(), sectionId: id, w: cell.w, h: splitHeight, src: selectedCell.src };
+            newCell2 = { id: uuidv4(), sectionId: id, w: cell.w, h: splitHeight, src: selectedCell.src };
 
             // add the two new cells together if the split cell 
             // was the last position in the cells array.
@@ -114,11 +82,14 @@ const LayoutSection = ({ id, selectedCell, setSelectedCell, setSplitCell, splitC
                 <LayoutCell 
                     key={cell.id}
                     id={cell.id}
+                    handleSwap={handleSwapContent}
                     height={cell.h}
                     width={cell.w}
+                    sectionId={id}
                     selected={!selectedCell ? false : cell.id === selectedCell.id}
+                    selectedCell={selectedCell}
                     setSelectedCell={setSelectedCell}
-                    src={cell.src}
+                    cellSrc={cell.src}
                 />
             ))}
         </div>

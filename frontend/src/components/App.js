@@ -6,24 +6,27 @@ import ActionArea from "./action/ActionArea.js";
 import EditArea from "./action/EditArea.js";
 import LayoutArea from "./layout/LayoutArea.js";
 
-const canvasStyles = {
-  position: "absolute",
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-}
-
 const App = () => {
+  const gridCols = 128
+  const gridRows = 256
+
+  const canvasStyles = {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  }
+
   const [editView, setEditView] = useState("Pallet");
-  const [sections, setSections] = useState([
-    { id: uuidv4() },
-    { id: uuidv4() },
-    { id: uuidv4() },
-    { id: uuidv4() },
+  const [cells, setCells] = useState([
+    { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+    { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+    { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+    { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
   ]);
-  const [selectedCell, setSelectedCell] = useState(null)
-  const [splitCell, setSplitCell] = useState(null)
+  const [selectedCell, setSelectedCell] = useState(null);
+  const [splitCell, setSplitCell] = useState(null);
 
   return (
     <>
@@ -32,19 +35,22 @@ const App = () => {
       />
       <div style={canvasStyles}>
         <LayoutArea 
-          sections={sections}
+          cells={cells}
+          gridCols={gridCols}
           selectedCell = {selectedCell}
+          setCells={setCells}
           setEditView={setEditView}
-          setSections={setSections}
           setSelectedCell={setSelectedCell}
           setSplitCell={setSplitCell}
           splitCell = {splitCell}
         />
         <EditArea
-          sections={sections} 
+          cells={cells} 
           editView={editView}
+          gridCols={gridCols}
+          gridRows={gridRows}
           selectedCell={selectedCell}
-          setSections={setSections}
+          setCells={setCells}
           setSelectedCell={setSelectedCell}
           setSplitCell={setSplitCell}
         />
