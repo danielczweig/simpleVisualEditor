@@ -9,7 +9,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Row from "react-bootstrap/Row";
 
 
-const ActionArea = ({ handleSave, setEditView, setShowLoad }) => {
+const ActionArea = ({ handleSave, setEditView, setSelectedCell, setShowLoad }) => {
   const actionAreaStyles = {
     padding: "1rem",
     position: "fixed",
@@ -33,7 +33,7 @@ const ActionArea = ({ handleSave, setEditView, setShowLoad }) => {
             <Dropdown.Item onMouseEnter={() => setShowLoad(true)}>Load Layout</Dropdown.Item>
           </DropdownButton>
         </Col>
-        <ButtonGroup style={{maxWidth: "20%", padding: ".5rem", boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)"}}>
+        <ButtonGroup style={{maxWidth: "20%", padding: ".5rem", boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)"}} onClick={() => setSelectedCell(null)}>
           <Button variant="secondary" style={actionAreaButtonStyles} onClick={() => setEditView("Pallet")}>
             Pallet
           </Button>

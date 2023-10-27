@@ -77,6 +77,7 @@ const App = () => {
 
     layoutId.current = loadItem.id;
     setCells(loadItem.layout);
+    setShowLoad(false);
   }
 
   const handleNewLayout = () => {
@@ -94,6 +95,7 @@ const App = () => {
       <ActionArea 
         handleSave={handleSave}
         setEditView={setEditView}
+        setSelectedCell={setSelectedCell}
         setShowLoad={setShowLoad}
       />
       <div style={canvasStyles}>
