@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 
@@ -24,17 +22,10 @@ const SaveLayout = ({ saveChanges, saveIndex, setShowModal }) => {
   }
 
   const [value, setValue] = useState("")
-  const [validated, setValidated] = useState(null);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    value.length > 0 ? setValidated(true) : setValidated(false);
-
-    if (validated) {
-        saveChanges(saveIndex, value);
-        setShowModal(false);
-        setValidated(null);
-    }
+    saveChanges(saveIndex, value);
+    setShowModal(false);
   };
 
   return (
@@ -53,18 +44,22 @@ const SaveLayout = ({ saveChanges, saveIndex, setShowModal }) => {
                         type="text" 
                         value={value} 
                         onChange={(e) => setValue(e.target.value)}
-                        placeholder="Masterpiece #11" 
+                        placeholder="ex. Masterpiece #11" 
                         name="username" 
                     />
                 </Row>
-                {validated === false &&
-                    <div style={{marginLeft: ".5rem", color: "red"}}>Please enter a layout name</div>
-                }
             </Modal.Body>
 
             <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
-            <Button variant="primary" onClick={(e) => handleSubmit(e)}>Save changes</Button>
+            <Button 
+              variant="secondary" 
+              onClick={() => setShowModal(false)}
+            >Close</Button>
+            <Button 
+              variant="primary" 
+              onClick={(e) => handleSubmit(e)} 
+              disabled={value.replace(/ /g, '').length === 0}
+            >Save changes</Button>
             </Modal.Footer>
         </Modal.Dialog>
         </div>
