@@ -32,7 +32,6 @@ const LayoutEditArea = ({ gridCols, gridRows, handleNewLayout, setCells, setSpli
         <Stack gap={3}>
           <Button variant="secondary" onClick={() => handleNewLayout()}>New Layout</Button>
           <Button variant="secondary" onClick={() => addNewCell()}>Add Cell</Button>
-          <Button variant="secondary">Empty Cell</Button>
           <Button variant="secondary" onClick={() => splitCell("vertical")}>Split Cell Vertically</Button>
           <Button variant="secondary" onClick={() => splitCell("horizontal")}>Split Cell Horizontally</Button>
         </Stack>

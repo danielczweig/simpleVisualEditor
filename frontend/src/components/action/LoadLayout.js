@@ -26,6 +26,9 @@ const LoadLayout = ({ handleLoad, savedLayouts, setShowLoad }) => {
                         {layout.name}
                     </ListGroup.Item>
                 ))}
+                {savedLayouts.length === 0 &&
+                    <div onClick={() => setShowLoad(false)}>No Layouts Saved</div>
+                }
             </ListGroup>
         </div>
     );

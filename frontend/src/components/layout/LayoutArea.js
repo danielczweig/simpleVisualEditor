@@ -52,33 +52,34 @@ const LayoutArea = ({ cells, gridCols, gridRows, selectedCell, setCells, setEdit
   };
 
   const handleHorizontalSplit = (selectedCell) => {
+
+      let colsAvailable = gridCols;
       let newCell2 = null;
-      let startCounter = false;
-      let counter = gridCols;
-    
+      let placedFirstCell = false;
+
       const updatedCells = cells.flatMap((cell, i, arr) => {
         if (cell.id === selectedCell.id) {
           const splitHeight = cell.h / 2;
           const newCell1 = { id: uuidv4(), w: cell.w, h: splitHeight, src: selectedCell.src };
           newCell2 = { id: uuidv4(), w: cell.w, h: splitHeight, src: selectedCell.src };
 
-          // add the two new cells together if the split cell 
-          // was the last position in the cells array.
-          // otherwise, just add newCell1 to the array for now.
           if (i === arr.length - 1) return [newCell1, newCell2];
-          counter -= cell.w;
-          startCounter = true;
+          placedFirstCell = true;
+          colsAvailable -= newCell1.w;
+          if (colsAvailable <= 0) colsAvailable = gridCols;
           return newCell1;
+        } else if (placedFirstCell && colsAvailable === gridCols) {
+          placedFirstCell = null;
+          return [newCell2, cell]
         } else {
-          // We add newCell2 to the array once we've traversed 
-          // enough column widths (gridCols - newCell1.w)
-          if (startCounter) counter -= cell.w;
-          if (counter === 0) return [cell, newCell2];
+          colsAvailable -= cell.w;
+          if (colsAvailable <= 0) colsAvailable = gridCols;
           return cell;
         }
       });
     
       setCells(updatedCells);
+
   };
 
   useEffect(() => {
