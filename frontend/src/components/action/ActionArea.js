@@ -1,6 +1,7 @@
 import React from "react";
 
 import Button from "react-bootstrap/Button";
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -10,7 +11,6 @@ import Row from "react-bootstrap/Row";
 
 const ActionArea = ({ handleSave, setEditView, setShowLoad }) => {
   const actionAreaStyles = {
-    backgroundColor: "gray",
     padding: "1rem",
     position: "fixed",
     top: 0,
@@ -28,19 +28,19 @@ const ActionArea = ({ handleSave, setEditView, setShowLoad }) => {
     <Container fluid style={actionAreaStyles} onClick={() => setShowLoad(false)}>
       <Row className="align-items-center">
         <Col>
-          <DropdownButton title="Settings">
+          <DropdownButton variant="light" title="Settings">
             <Dropdown.Item onClick={handleSave}>Save Layout</Dropdown.Item>
             <Dropdown.Item onMouseEnter={() => setShowLoad(true)}>Load Layout</Dropdown.Item>
           </DropdownButton>
         </Col>
-        <Col className="text-center">
-          <Button variant="primary" style={actionAreaButtonStyles} onClick={() => setEditView("Pallet")}>
-            Picture
+        <ButtonGroup style={{maxWidth: "20%", padding: ".5rem", boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)"}}>
+          <Button variant="secondary" style={actionAreaButtonStyles} onClick={() => setEditView("Pallet")}>
+            Pallet
           </Button>
-          <Button variant="primary" style={actionAreaButtonStyles} onClick={() => setEditView("Layout")}>
+          <Button variant="secondary" style={actionAreaButtonStyles} onClick={() => setEditView("Layout")}>
             Layout
           </Button>
-        </Col>
+        </ButtonGroup>
         <Col></Col>
       </Row>
     </Container>

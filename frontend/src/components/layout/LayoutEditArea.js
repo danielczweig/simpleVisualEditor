@@ -6,10 +6,14 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 
 const layoutEditAreaStyles = {
-    backgroundColor: "#eee",
     padding: "1rem",
-    border: "1px solid #000",
 };
+
+const headerStyles = {
+  display: "flex", 
+  justifyContent: "center", 
+  marginBottom: "1rem"
+}
 
 const LayoutEditArea = ({ gridCols, gridRows, handleNewLayout, setCells, setSplitCell }) => {
 
@@ -24,13 +28,14 @@ const LayoutEditArea = ({ gridCols, gridRows, handleNewLayout, setCells, setSpli
   
   return (
     <div style={layoutEditAreaStyles}>
-      <Stack gap={3}>
-        <Button variant="light" onClick={() => handleNewLayout()}>New Layout</Button>
-        <Button variant="light" onClick={() => addNewCell()}>Add Cell</Button>
-        <Button variant="light">Empty Cell</Button>
-        <Button variant="light" onClick={() => splitCell("vertical")}>Split Cell Vertically</Button>
-        <Button variant="light" onClick={() => splitCell("horizontal")}>Split Cell Horizontally</Button>
-      </Stack>
+      <div style={headerStyles}>Layout Editor</div>
+        <Stack gap={3}>
+          <Button variant="secondary" onClick={() => handleNewLayout()}>New Layout</Button>
+          <Button variant="secondary" onClick={() => addNewCell()}>Add Cell</Button>
+          <Button variant="secondary">Empty Cell</Button>
+          <Button variant="secondary" onClick={() => splitCell("vertical")}>Split Cell Vertically</Button>
+          <Button variant="secondary" onClick={() => splitCell("horizontal")}>Split Cell Horizontally</Button>
+        </Stack>
     </div>
   );
 };

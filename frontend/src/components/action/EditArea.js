@@ -8,7 +8,9 @@ const EditArea = ({ editView, gridCols, gridRows, handleNewLayout, setCells, set
     position: "fixed",
     marginLeft: "1rem",
     left: 0,
-    top: "10%",
+    top: 0,
+    marginTop: "6rem",
+    boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
   }
 
   return (

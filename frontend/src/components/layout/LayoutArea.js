@@ -11,7 +11,7 @@ const LayoutArea = ({ cells, gridCols, gridRows, selectedCell, setCells, setEdit
     maxWidth: "30rem",
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "5%",
+    marginTop: "6rem",
     display: "grid",
     gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
     gridTemplateRows: `repeat(${gridRows}, 1fr)`,
