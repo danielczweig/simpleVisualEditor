@@ -26,6 +26,13 @@ const App = () => {
     { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
     { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
     { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+    // { id: uuidv4(), w: 128, h: 32, src: null },
+    // { id: uuidv4(), w: 128, h: 32, src: null },
+    // { id: uuidv4(), w: 32, h: 64, src: null },
+    // { id: uuidv4(), w: 32, h: 64, src: null },
+    // { id: uuidv4(), w: 64, h: 64, src: null },
+    // { id: uuidv4(), w: 128, h: 64, src: null },
+    // { id: uuidv4(), w: 128, h: 64, src: null },
   ]);
   const [selectedCell, setSelectedCell] = useState(null);
   const [splitCell, setSplitCell] = useState(null);
