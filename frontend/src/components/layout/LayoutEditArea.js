@@ -11,7 +11,7 @@ const layoutEditAreaStyles = {
     border: "1px solid #000",
 };
 
-const LayoutEditArea = ({ gridCols, gridRows, setCells, setSplitCell }) => {
+const LayoutEditArea = ({ gridCols, gridRows, handleNewLayout, setCells, setSplitCell }) => {
 
   const addNewCell = () => {
     const newCell = { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null };
@@ -25,6 +25,7 @@ const LayoutEditArea = ({ gridCols, gridRows, setCells, setSplitCell }) => {
   return (
     <div style={layoutEditAreaStyles}>
       <Stack gap={3}>
+        <Button variant="light" onClick={() => handleNewLayout()}>New Layout</Button>
         <Button variant="light" onClick={() => addNewCell()}>Add Cell</Button>
         <Button variant="light">Empty Cell</Button>
         <Button variant="light" onClick={() => splitCell("vertical")}>Split Cell Vertically</Button>

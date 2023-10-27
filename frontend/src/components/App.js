@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,6 +6,7 @@ import ActionArea from "./action/ActionArea.js";
 import EditArea from "./action/EditArea.js";
 import LayoutArea from "./layout/LayoutArea.js";
 import SaveLayout from "./action/SaveLayout.js";
+import LoadLayout from "./action/LoadLayout.js";
 
 const App = () => {
   const gridCols = 128
@@ -28,7 +29,8 @@ const App = () => {
   ]);
   const [selectedCell, setSelectedCell] = useState(null);
   const [splitCell, setSplitCell] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showLoad, setShowLoad] = useState(false);
 
   let layoutId = useRef(uuidv4())
   let savedLayouts = useRef([])
@@ -36,7 +38,7 @@ const App = () => {
   const handleSave = () => {
     const index = savedLayouts.current.findIndex((layout) => layout.id === layoutId.current)
     if (index < 0) {
-      setShowModal(true)
+      setShowSaveModal(true)
     } else {
       saveChanges(index);
     }
@@ -63,11 +65,29 @@ const App = () => {
     }
   }
 
+  const handleLoad = (index) => {
+    const loadItem = savedLayouts.current[index];
+
+    layoutId.current = loadItem.id;
+    setCells(loadItem.layout);
+  }
+
+  const handleNewLayout = () => {
+    setCells([   
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+    ]);
+    layoutId.current = uuidv4();
+  }
+
   return (
     <>
       <ActionArea 
         handleSave={handleSave}
         setEditView={setEditView}
+        setShowLoad={setShowLoad}
       />
       <div style={canvasStyles}>
         <LayoutArea 
@@ -85,17 +105,26 @@ const App = () => {
           editView={editView}
           gridCols={gridCols}
           gridRows={gridRows}
+          handleNewLayout={handleNewLayout}
           selectedCell={selectedCell}
           setCells={setCells}
+          setShowLoad={setShowLoad}
           setSelectedCell={setSelectedCell}
           setSplitCell={setSplitCell}
         />
       </div>
-      {showModal &&
+      {showSaveModal &&
         <SaveLayout 
           saveChanges={saveChanges}
           saveIndex={savedLayouts.length}
-          setShowModal={setShowModal}
+          setShowModal={setShowSaveModal}
+        />
+      }
+      {showLoad &&
+        <LoadLayout 
+          handleLoad={handleLoad}
+          savedLayouts={savedLayouts.current}
+          setShowLoad={setShowLoad}
         />
       }
     </>

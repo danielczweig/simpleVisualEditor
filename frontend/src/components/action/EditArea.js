@@ -3,17 +3,18 @@ import React from "react";
 import LayoutEditArea from "../layout/LayoutEditArea.js";
 import PalletEditArea from "../pallet/PalletEditArea.js";
 
-const actionAreaStyles = {
-  position: "fixed",
-  marginLeft: "1rem",
-  left: 0,
-  top: "10%",
-}
+const EditArea = ({ editView, gridCols, gridRows, handleNewLayout, setCells, setShowLoad, setSelectedCell, setSplitCell }) => {
+  const editAreaStyles = {
+    position: "fixed",
+    marginLeft: "1rem",
+    left: 0,
+    top: "10%",
+  }
 
-const EditArea = ({ editView, gridCols, gridRows, setCells, setSelectedCell, setSplitCell }) => {
   return (
     <div 
-      style={actionAreaStyles}
+      style={editAreaStyles}
+      onMouseEnter={() => setShowLoad(false)}
     >
       {editView === null && null}
       {editView === "Pallet" && 
@@ -25,6 +26,7 @@ const EditArea = ({ editView, gridCols, gridRows, setCells, setSelectedCell, set
         <LayoutEditArea
           gridCols={gridCols}
           gridRows={gridRows}
+          handleNewLayout={handleNewLayout}
           setCells={setCells}
           setSplitCell={setSplitCell}
         />
