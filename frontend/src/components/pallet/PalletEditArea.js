@@ -14,16 +14,23 @@ const imageSrcList = [
 
 const palletEditAreaStyles = {
     maxWidth: "15rem",
-    backgroundColor: "#eee",
+    maxHeight: "80vh",
     padding: "1rem",
-    border: "1px solid #000",
+    overflowX: "hidden"
 };
+
+const headerStyles = {
+    display: "flex", 
+    justifyContent: "center", 
+    marginBottom: "1rem"
+}
 
 const PalletEditArea = ({ setSelectedCell }) => {
     return (
         <div 
             style={palletEditAreaStyles}
         >
+            <div style={headerStyles}>Pallet Editor</div>
             <Stack gap={3}>
                 {imageSrcList.map((imageSrc, index) => (
                     <PalletItem
