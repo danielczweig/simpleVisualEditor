@@ -85,22 +85,26 @@ const App = () => {
   }
 
   const handleNewLayout = () => {
-    setCells([   
+    const newCells = [   
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
-    ]);
+    ]
+    setCells(newCells);
+    layout.current = newCells;
     layoutId.current = uuidv4();
   }
 
   const handleClearLayout = () => {
-    setCells([   
+    const newCells = [   
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
       { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
-    ]);
+    ]
+    setCells(newCells);
+    layout.current = newCells;
   }
 
   const handleDropImage = (item, id) => {
