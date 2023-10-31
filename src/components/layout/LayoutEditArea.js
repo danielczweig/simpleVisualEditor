@@ -15,11 +15,13 @@ const headerStyles = {
   marginBottom: "1rem"
 }
 
-const LayoutEditArea = ({ gridCols, gridRows, handleClearLayout, setCells, setSplitCell }) => {
+const LayoutEditArea = ({ gridCols, gridRows, handleClearLayout, layout, setCells, setSplitCell, updateLayoutRef }) => {
 
   const addNewCell = () => {
     const newCell = { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null };
-    setCells((prevCells) => [...prevCells, newCell]);
+    const updatedCells = [...layout, newCell]
+    setCells(updatedCells);
+    updateLayoutRef(updatedCells);
   };
 
   const splitCell = (splitDir) => {

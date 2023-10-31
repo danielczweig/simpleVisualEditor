@@ -36,6 +36,10 @@ const App = () => {
   let savedLayouts = useRef([])
   let layout = useRef(cells)
 
+  const updateLayoutRef = (cells) => {
+    layout.current = cells;
+  }
+
   const handleSave = () => {
     const index = savedLayouts.current.findIndex((layout) => layout.id === layoutId.current)
     if (index < 0) {
@@ -221,16 +225,17 @@ const App = () => {
           splitCell = {splitCell}
         />
         <EditArea
-          cells={cells} 
           editView={editView}
           gridCols={gridCols}
           gridRows={gridRows}
           handleClearLayout={handleClearLayout}
+          layout={layout.current}
           selectedCell={selectedCell}
           setCells={setCells}
           setShowLoad={setShowLoad}
           setSelectedCell={setSelectedCell}
           setSplitCell={setSplitCell}
+          updateLayoutRef={updateLayoutRef}
         />
       </div>
       {showSaveModal &&
