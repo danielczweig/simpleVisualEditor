@@ -50,7 +50,7 @@ const App = () => {
     const newRecord = {
       id: layoutId.current,
       name: name || prevRecord.name,
-      layout: cells,
+      layout: layout.current,
     };
 
     if (savedLayouts.current.length === 0) {
@@ -81,6 +81,7 @@ const App = () => {
 
     layoutId.current = loadItem.id;
     setCells(loadItem.layout);
+    layout.current = loadItem.layout;
     setShowLoad(false);
   }
 
@@ -132,6 +133,7 @@ const App = () => {
 
       // Set the updated cells array to the state.
       setCells(updatedCells);
+      layout.current = updatedCells;
       setSelectedCell(null);
     }
   }
