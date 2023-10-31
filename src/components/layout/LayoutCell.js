@@ -1,7 +1,7 @@
 import React from "react";
 import { useDrag, useDrop } from 'react-dnd'
 
-const LayoutCell = ({ id, cells, cellSrc, handleSwap, height, width, selected, setCells, setSelectedCell }) => {
+const LayoutCell = ({ id, cellSrc, handleDropImage, handleSwap, height, width, selected, setSelectedCell }) => {
 
   const cellStyles = {
     height: "100%",
@@ -26,7 +26,7 @@ const LayoutCell = ({ id, cells, cellSrc, handleSwap, height, width, selected, s
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["image", "cellContent"],
-    drop: (item) => handleDrop(item),
+    drop: (item) => handleDrop(item, id),
     collect: monitor => ({
       isOver: !!monitor.isOver(),
     }),
@@ -34,21 +34,13 @@ const LayoutCell = ({ id, cells, cellSrc, handleSwap, height, width, selected, s
 
   const handleDrop = (item) => {
     const imageSrc = (item.imageSrc)
-    const id = (item.id)
+    const cellDragId = (item.id)
     
-    if (imageSrc) handleDropImage(item)
-    if (id) handleSwapContent(item, cells)
+    if (imageSrc) handleDropImage(item, id)
+    if (cellDragId) handleSwapContent(item)
   }
 
-  const handleDropImage = (item) => {
-    const updatedCells = cells.map((cell) => cell);
-    const dropIndex = updatedCells.findIndex((cell) => cell.id === id);
-    updatedCells[dropIndex].src = item.imageSrc;
-
-    setCells(updatedCells)
-  }
-
-  const handleSwapContent = (item, cells) => {
+  const handleSwapContent = (item) => {
     const dragCellId = item.id;
     const dropCellId = id;
 
