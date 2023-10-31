@@ -24,7 +24,7 @@ const SaveLayout = ({ saveChanges, saveIndex, setShowModal }) => {
   const [value, setValue] = useState("")
 
   const handleSubmit = (e) => {
-    saveChanges(saveIndex, value);
+    saveChanges(saveIndex, true, value);
     setShowModal(false);
   };
 

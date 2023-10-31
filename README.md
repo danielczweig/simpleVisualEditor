@@ -27,7 +27,7 @@ Clone this repo to your machine and run locally.
 git clone https://github.com/danielczweig/simpleVisualEditor.git
 
 # Change to the project directory
-cd your-project
+cd simpleVisualEditor
 
 # Install dependencies
 npm install

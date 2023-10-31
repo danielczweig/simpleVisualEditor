@@ -2,7 +2,7 @@ import React from "react";
 
 import ListGroup from 'react-bootstrap/ListGroup';
 
-const LoadLayout = ({ handleLoad, savedLayouts, setShowLoad }) => {
+const LoadLayout = ({ handleLoad, layoutId, savedLayouts, setShowLoad }) => {
     const loadLayoutStyles = {
         position: "fixed",
         marginLeft: "1rem",
@@ -20,10 +20,11 @@ const LoadLayout = ({ handleLoad, savedLayouts, setShowLoad }) => {
             <ListGroup >
                 {savedLayouts.map((layout, i) => (
                     <ListGroup.Item 
+                        disabled={layout.id === layoutId}
                         onClick={() => handleLoad(i)}
                         action
                     >
-                        {layout.name}
+                        {`${layout.name}${layout.id === layoutId ? " (Current)" : ""}`}
                     </ListGroup.Item>
                 ))}
                 {savedLayouts.length === 0 &&

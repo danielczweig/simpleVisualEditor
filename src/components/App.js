@@ -26,13 +26,6 @@ const App = () => {
     { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
     { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
     { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
-    // { id: uuidv4(), w: 128, h: 32, src: null },
-    // { id: uuidv4(), w: 128, h: 32, src: null },
-    // { id: uuidv4(), w: 32, h: 64, src: null },
-    // { id: uuidv4(), w: 32, h: 64, src: null },
-    // { id: uuidv4(), w: 64, h: 64, src: null },
-    // { id: uuidv4(), w: 128, h: 64, src: null },
-    // { id: uuidv4(), w: 128, h: 64, src: null },
   ]);
   const [selectedCell, setSelectedCell] = useState(null);
   const [splitCell, setSplitCell] = useState(null);
@@ -47,11 +40,11 @@ const App = () => {
     if (index < 0) {
       setShowSaveModal(true)
     } else {
-      saveChanges(index);
+      saveChanges(index, false);
     }
   }
 
-  const saveChanges = (index, name) => {
+  const saveChanges = (index, newLayout, name) => {
     const prevRecord = savedLayouts.current[index];
     const newRecord = {
       id: layoutId.current,
@@ -61,6 +54,8 @@ const App = () => {
 
     if (savedLayouts.current.length === 0) {
       savedLayouts.current = [newRecord];
+    } else if (newLayout) {
+      savedLayouts.current = [newRecord, ...savedLayouts.current];
     } else {
       //remove prevRecord from savedLayouts
       let _savedLayouts = [...savedLayouts.current];
@@ -74,6 +69,14 @@ const App = () => {
 
   const handleLoad = (index) => {
     const loadItem = savedLayouts.current[index];
+
+    //remove prevRecord from savedLayouts
+    let _savedLayouts = [...savedLayouts.current];
+    _savedLayouts.splice(index, 1);
+
+    // save newRecord as first position in _savedLayouts
+    _savedLayouts.splice(0, 0, loadItem);
+    savedLayouts.current = _savedLayouts;
 
     layoutId.current = loadItem.id;
     setCells(loadItem.layout);
@@ -90,10 +93,22 @@ const App = () => {
     layoutId.current = uuidv4();
   }
 
+  const handleClearLayout = () => {
+    setCells([   
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+      { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null },
+    ]);
+  }
+
   return (
     <>
       <ActionArea 
+        handleNewLayout={handleNewLayout}
         handleSave={handleSave}
+        layoutId={layoutId.current}
+        savedLayouts={savedLayouts.current}
         setEditView={setEditView}
         setSelectedCell={setSelectedCell}
         setShowLoad={setShowLoad}
@@ -114,7 +129,7 @@ const App = () => {
           editView={editView}
           gridCols={gridCols}
           gridRows={gridRows}
-          handleNewLayout={handleNewLayout}
+          handleClearLayout={handleClearLayout}
           selectedCell={selectedCell}
           setCells={setCells}
           setShowLoad={setShowLoad}
@@ -132,6 +147,7 @@ const App = () => {
       {showLoad &&
         <LoadLayout 
           handleLoad={handleLoad}
+          layoutId={layoutId.current}
           savedLayouts={savedLayouts.current}
           setShowLoad={setShowLoad}
         />
