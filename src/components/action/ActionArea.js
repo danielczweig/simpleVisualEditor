@@ -8,8 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Row from "react-bootstrap/Row";
 
-
-const ActionArea = ({ handleSave, setEditView, setSelectedCell, setShowLoad }) => {
+const ActionArea = ({ handleNewLayout, handleSave, layoutId, savedLayouts, setEditView, setSelectedCell, setShowLoad }) => {
   const actionAreaStyles = {
     padding: "1rem",
     position: "fixed",
@@ -23,15 +22,30 @@ const ActionArea = ({ handleSave, setEditView, setSelectedCell, setShowLoad }) =
     marginRight: ".5rem",
   }
 
+  const getLayoutName = () => {
+    const index = savedLayouts.findIndex((layout) => layout.id === layoutId);
+
+    if (index === -1) return "New Layout";
+
+    return savedLayouts[index].name;
+  }
 
   return (
     <Container fluid style={actionAreaStyles} onClick={() => setShowLoad(false)}>
       <Row className="align-items-center">
         <Col>
-          <DropdownButton variant="light" title="Settings">
-            <Dropdown.Item onClick={handleSave}>Save Layout</Dropdown.Item>
-            <Dropdown.Item onMouseEnter={() => setShowLoad(true)}>Load Layout</Dropdown.Item>
-          </DropdownButton>
+          <Row className="align-items-center">
+            <Col sm={2}>
+              <DropdownButton variant="light" title="Settings">
+                <Dropdown.Item onClick={handleNewLayout}>New Layout</Dropdown.Item>
+                <Dropdown.Item onClick={handleSave}>Save Layout</Dropdown.Item>
+                <Dropdown.Item onMouseEnter={() => setShowLoad(true)}>Load Layout</Dropdown.Item>
+              </DropdownButton>
+            </Col>
+            <Col>
+              <div style={{borderLeft: "2px solid #6C757D", paddingLeft: "1.5rem", color: "#6C757D"}}>{getLayoutName()}</div>
+            </Col>
+          </Row>
         </Col>
         <ButtonGroup style={{maxWidth: "20%", padding: ".5rem", boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)"}} onClick={() => setSelectedCell(null)}>
           <Button variant="secondary" style={actionAreaButtonStyles} onClick={() => setEditView("Pallet")}>
@@ -41,7 +55,8 @@ const ActionArea = ({ handleSave, setEditView, setSelectedCell, setShowLoad }) =
             Layout
           </Button>
         </ButtonGroup>
-        <Col></Col>
+        <Col>
+        </Col>
       </Row>
     </Container>
   );

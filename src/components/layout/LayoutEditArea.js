@@ -15,7 +15,7 @@ const headerStyles = {
   marginBottom: "1rem"
 }
 
-const LayoutEditArea = ({ gridCols, gridRows, handleNewLayout, setCells, setSplitCell }) => {
+const LayoutEditArea = ({ gridCols, gridRows, handleClearLayout, setCells, setSplitCell }) => {
 
   const addNewCell = () => {
     const newCell = { id: uuidv4(), w: gridCols, h: gridRows / 4, src: null };
@@ -30,7 +30,7 @@ const LayoutEditArea = ({ gridCols, gridRows, handleNewLayout, setCells, setSpli
     <div style={layoutEditAreaStyles}>
       <div style={headerStyles}>Layout Editor</div>
         <Stack gap={3}>
-          <Button variant="secondary" onClick={() => handleNewLayout()}>New Layout</Button>
+          <Button variant="secondary" onClick={() => handleClearLayout()}>Clear Layout</Button>
           <Button variant="secondary" onClick={() => addNewCell()}>Add Cell</Button>
           <Button variant="secondary" onClick={() => splitCell("vertical")}>Split Cell Vertically</Button>
           <Button variant="secondary" onClick={() => splitCell("horizontal")}>Split Cell Horizontally</Button>
