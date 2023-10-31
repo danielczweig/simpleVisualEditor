@@ -7,7 +7,7 @@ const LoadLayout = ({ handleLoad, layoutId, savedLayouts, setShowLoad }) => {
         position: "fixed",
         marginLeft: "1rem",
         left: 160,
-        top: 80,
+        top: 120,
         width: "15rem",
         backgroundColor: "white",
         padding: "1rem",
