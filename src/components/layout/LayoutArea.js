@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import LayoutCell from "./LayoutCell.js"
 
-const LayoutArea = ({ cells, gridCols, gridRows, selectedCell, setCells, setEditView, setSelectedCell, setSplitCell, splitCell }) => {
+const LayoutArea = ({ cells, gridCols, selectedCell, setCells, setEditView, setSelectedCell, setSplitCell, splitCell }) => {
   const layoutAreaStyles = {
     minHeight: "75%",
     width: "50%",
@@ -14,7 +14,8 @@ const LayoutArea = ({ cells, gridCols, gridRows, selectedCell, setCells, setEdit
     marginTop: "6rem",
     display: "grid",
     gridTemplateColumns: `repeat(${gridCols}, 1fr)`,
-    gridTemplateRows: `repeat(${gridRows}, 1fr)`,
+    gridAutoFlow: "dense",
+    girdAutoRows: "1fr",
     border: "3px solid black"
   };
   

@@ -4,7 +4,7 @@ import { useDrag, useDrop } from 'react-dnd'
 const LayoutCell = ({ id, cells, cellSrc, handleSwap, height, width, selected, setCells, setSelectedCell }) => {
 
   const cellStyles = {
-    heigh: "100%",
+    height: "100%",
     width: "100%",
     gridColumn: "span " + width,
     gridRow: "span " + height,
